@@ -10,11 +10,13 @@ function DbConnection() {
 
     const db = mongoose.connection;
 
-    db.on("error", console.log.bind(console, "Connection Error !!"));
-    db.once("open", function(){
+    db.on("error", (error) => {
+        console.error("Connection Error:", error);
+    });
+
+    db.once("open", () => {
         console.log("DB Connected !!");
-    })
+    });
 }
 
 module.exports = DbConnection;
-// mongodb+srv ://sakshisharma219213:<password>@cluster0.p53yf8b.mongodb.net/?retryWrites=true&w=majority

@@ -15,7 +15,29 @@ const userSchema = new Schema(
         email: {
             type: String,
             required: true,
+        },
+        issuedBook:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Book",
+            required: false
+        },
+        issuedDate: {
+            type: String,
+            required: false,
+        },
+        returnDate:{
+            type: String,
+            required: false,
+        },
+        subscriptionType: {
+            type: String,
+            required: true,
+        },
+        subscriptionDate: {
+            type: String,
+            required: true,
         }
+
     },
     {
         timestamps: true

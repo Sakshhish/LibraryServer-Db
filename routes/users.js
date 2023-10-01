@@ -1,5 +1,8 @@
 const express = require("express");
 const {users} = require("../data/users.json");
+const { UserModel, BookModel } = require("../modals");
+const { getAllUsers, getSingleUserById, deleteUser } = require("../controllers/user-controller");
+
 
 const router = express.Router();
 
@@ -11,12 +14,7 @@ const router = express.Router();
  * Access: Public
  * Paramaters: None
  */
-router.get('/',(req, res)=>{
-    res.status(200).json({
-        success: true,
-        data: users
-    })
-})
+router.get('/', getAllUsers)
 
 
 
@@ -27,21 +25,7 @@ router.get('/',(req, res)=>{
  * Access: Public
  * Paramaters: ID
  */
-router.get('/:id',(req, res)=>{
-    const {id} = req.params;
-    const user = users.find((each)=>each.id === id);
-
-    if(!user){
-        return res.status(404).json({
-            success: false,
-            message: "User Does Not Exist"
-        })
-    }
-    return res.status(200).json({
-        success: true,
-        data: user
-    })
-})
+router.get('/:id', getSingleUserById);
 
 
 /**
@@ -119,18 +103,7 @@ router.put('/:id', (req, res)=>{
  * Access: Public
  * Paramaters: ID
  */
-router.delete('/:id', (req, res)=>{
-    const {id} = req.params;
-    const user = users.find((each)=> each.id===id);
-
-    if(!user)
-    return res.status(404).json({success: false, message: "User Not Found"});
-
-    const index = users.indexOf(user);
-    users.splice(index, 1);
-
-    return res.status(200).json({success: true, data: users});
-})
+router.delete('/:id', deleteUser);
 
 
 /**
